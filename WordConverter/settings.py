@@ -128,4 +128,12 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = '/code/DATA/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/api/media/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.StaticHTMLRenderer',
+    )
+}

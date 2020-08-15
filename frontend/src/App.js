@@ -103,7 +103,7 @@ export default class App extends Component {
         if (this.state.loaded) {
             elementComponents = elements.map(item =>
                 <li key={item.id}>
-                    {item.name} - input: {item.inputfile} - converted: {item.convertedfile}
+                    {item.id} - {item.name} - input: {item.inputfile} - converted: {item.convertedfile}
                 </li>
             )
         }

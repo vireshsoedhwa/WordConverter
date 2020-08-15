@@ -7,12 +7,31 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-volume:/var/lib/postgres
+    networks:
+      - app-network
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
+    image: wordconverter
+    restart: unless-stopped
+    tty: true
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+    working_dir: /code
+    networks:
+      - app-network
+
+volumes:
+  db-volume: 
+
+networks:
+  app-network:
+    driver: bridge
+

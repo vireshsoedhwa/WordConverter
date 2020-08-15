@@ -30,9 +30,9 @@ export default class App extends Component {
 
         // Update the formData object 
         formData.append(
-            "myFile",
-            this.state.selectedFile,
-            this.state.selectedFile.name
+            "file",
+            this.state.selectedFile
+            // this.state.selectedFile.name
         );
 
         // Details of the uploaded file 
@@ -40,7 +40,32 @@ export default class App extends Component {
 
         // Request made to the backend api 
         // Send formData object 
-        axios.post("api/upload", formData);
+        // axios.put("api/upload", formData);
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+        // axios.defaults.xsrfCookieName = 'csrftoken'
+        // axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
+        axios.post("http://localhost:8000/api/upload", formData, {
+            headers: {
+                'X-CSRF-TOKEN': csrftoken
+            }
+        })
+
+
+        // const request = new Request(
+        //     /* URL */,
+        //     {headers: {'X-CSRFToken': csrftoken}}
+        // );
+        // fetch(request, {
+        //     method: 'POST',
+        //     mode: 'same-origin'  // Do not send CSRF token to another domain.
+        // }).then(function(response) {
+        //     // ...
+        // });
+
+
+
     };
 
     fileData = () => {
@@ -72,6 +97,10 @@ export default class App extends Component {
 
 
     componentDidMount() {
+
+        console.log("token1 = " + document.querySelector('[name=csrfmiddlewaretoken]').value)
+        console.log("token2 = " + getCookie('csrftoken'))
+
         fetch("api/conversion")
             .then(response => {
                 if (response.status > 400) {
@@ -132,3 +161,18 @@ export default class App extends Component {
     }
 }
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

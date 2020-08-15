@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = True
 
 # Application definition
 
@@ -131,9 +133,8 @@ MEDIA_ROOT = '/code/DATA/'
 MEDIA_URL = '/api/media/'
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.StaticHTMLRenderer',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer'
+#     )
+# }

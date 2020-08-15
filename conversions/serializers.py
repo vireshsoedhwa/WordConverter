@@ -4,4 +4,4 @@ from .models import Conversion
 class ConversionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversion
-        fields = ('id', 'name', 'convertedfile', 'inputfile')
+        fields = ('id', 'name', 'convertedfile', 'inputfile', 'created_at')

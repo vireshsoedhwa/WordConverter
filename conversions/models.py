@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 # fs = FileSystemStorage(location='uploads/')
 
 def file_directory_path(instance, filename):
-    return 'input/{0}/{1}'.format(instance.id, filename)
+    return 'input/{0}/{1}'.format(instance.id, "doc")
 
 
 class Conversion(models.Model):

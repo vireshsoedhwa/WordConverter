@@ -52,9 +52,15 @@ class ConversionUploadView(APIView):
         output, errors = tidy_document(output)
         with open("/code/DATA/converted/" + str(newfile.id) + "/index.html", 'w') as f:
             f.write(output)
-
         
 
+        f = open("/code/DATA/converted/" + str(newfile.id) + "/index.html")
+        convertedfile = File(f)
+     
+        newfile.convertedfile = convertedfile
+        logger.error(newfile.convertedfile.url)
+
+        newfile.save()
         # logger.error(file_obj.name)
 
         # newfile = Conversion.objects.create(name="file5", inputfile=file_obj,  convertedfile=output)

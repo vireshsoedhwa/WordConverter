@@ -13,16 +13,40 @@ import pypandoc
 from tidylib import tidy_document
 
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
-
 from django.core.files import File
+
+from rest_framework.decorators import api_view
+from rest_framework.renderers import StaticHTMLRenderer
 # Create your views here.
 
 class ConversionListCreate(generics.ListCreateAPIView):
     queryset = Conversion.objects.all()
     serializer_class = ConversionSerializer
+
+
+
+class ConversionHTMLfile(generics.ListCreateAPIView):
+    queryset = Conversion.objects.all()
+    serializer_class = ConversionSerializer
+
+    
+    def get(self, request):
+
+        selected = Conversion.objects.get(pk=request.query_params['doc'])
+
+        logger.error(selected.convertedfile)
+
+        with open(selected.convertedfile.path, 'r') as file:
+            data = file.read()
+
+        # logger.error(data)
+
+        return Response(data)
+
 
 class ConversionUploadView(APIView):
     parser_classes = [FileUploadParser]
@@ -33,7 +57,8 @@ class ConversionUploadView(APIView):
         # do some stuff with uploaded file
         # ...
 
-        # output = pypandoc.convert_file(file_obj, outputfile='demo.pdf')\
+        if not os.path.exists('/code/DATA/'):
+            os.makedirs('/code/DATA/')
 
         newfile = Conversion.objects.create(name=file_obj.name)
 
@@ -46,8 +71,16 @@ class ConversionUploadView(APIView):
 
         output = pypandoc.convert_file("/code/DATA/input/" + str(newfile.id) + "/" + newfile.name ,
                                to='html5',
-                               extra_args=['--extract-media=./DATA/converted/' + str(newfile.id)],
+                               extra_args=['--extract-media=/code/DATA/converted/' + str(newfile.id)],
                                format='docx')
+
+        # if not os.path.exists('/code/DATA/temp/'):
+        #     os.makedirs('/code/DATA/temp/')
+
+        # directory = str(newfile.id)
+        # parent_dir = "/code/DATA/temp/"
+        # path = os.path.join(parent_dir, directory) 
+        # os.mkdir(path) 
 
         output, errors = tidy_document(output)
         with open("/code/DATA/converted/" + str(newfile.id) + "/index.html", 'w') as f:
@@ -61,8 +94,5 @@ class ConversionUploadView(APIView):
         logger.error(newfile.convertedfile.url)
 
         newfile.save()
-        # logger.error(file_obj.name)
-
-        # newfile = Conversion.objects.create(name="file5", inputfile=file_obj,  convertedfile=output)
 
         return Response(status=204)

@@ -21,7 +21,12 @@ from django.core.files import File
 
 from rest_framework.decorators import api_view
 from rest_framework.renderers import StaticHTMLRenderer
+from rest_framework import renderers
 
+from django.http import HttpResponse
+from django.http import FileResponse
+
+from django.shortcuts import render
 # Create your views here.
 
 class ConversionListCreate(generics.ListCreateAPIView):
@@ -42,6 +47,13 @@ class ConversionHTMLfile(generics.ListCreateAPIView):
             data = file.read()        
         return Response(data)
 
+
+
+def ConversionImage(request, id, targetfile):
+    logger.error(id)
+    logger.error(targetfile)
+    response = FileResponse(open("/code/DATA/converted/" + str(id) + "/media/" + targetfile, 'rb'))
+    return response
 
 
 
@@ -99,7 +111,7 @@ class ConversionUploadAndSave(APIView):
         if not os.path.exists('/code/DATA/'):
             os.makedirs('/code/DATA/')
 
-        newfile = Conversion.objects.create(name=file_obj.name)
+        newfile = Conversion.objects.create(name="doc")
 
         newfile.inputfile=file_obj
         newfile.save()

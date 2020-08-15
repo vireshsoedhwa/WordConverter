@@ -7,4 +7,5 @@ urlpatterns = [
     # url(r'/upload/(?P<filename>[^/]+)$', views.ConversionUploadView.as_view()),
     url(r'upload', views.ConversionUploadAndSave.as_view()),
     path('media', views.ConversionHTMLfile.as_view() ),
+    path('<int:id>/media/<targetfile>', views.ConversionImage)
 ]

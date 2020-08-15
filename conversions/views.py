@@ -30,7 +30,7 @@ from django.shortcuts import render
 # Create your views here.
 
 class ConversionListCreate(generics.ListCreateAPIView):
-    queryset = Conversion.objects.all()
+    queryset = Conversion.objects.all().order_by('-id')[:5]
     serializer_class = ConversionSerializer
 
 

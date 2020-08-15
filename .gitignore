@@ -6,3 +6,4 @@ __pycache__
 migrations
 
 __init__.py
+frontend/static/frontend/app.bundle.js

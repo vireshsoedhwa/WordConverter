@@ -68,7 +68,7 @@ class ConversionUploadAndSave(APIView):
 
         # logger.error(request.method)
         # logger.error(request.FILES['file'])
-        # logger.error(file_obj.name)
+        logger.error(file_obj.name)
 
         # logger.error(request.data['filetype'])
         # logger.error(request.data['LastModified'])
@@ -76,26 +76,32 @@ class ConversionUploadAndSave(APIView):
         if not os.path.exists('/code/DATA/'):
             os.makedirs('/code/DATA/')
 
+        if not os.path.exists('/code/DATA/converted/'):
+            os.makedirs('/code/DATA/converted/')
+
         newfile = Conversion.objects.create(name=file_obj.name)
 
         newfile.inputfile=file_obj
         newfile.save()
 
-        output = pypandoc.convert_file("/code/DATA/input/" + str(newfile.id) + "/doc",
-                               to='html5',
-                               extra_args=['--extract-media=/code/DATA/converted/' + str(newfile.id)],
-                               format='docx')
-
-        output, errors = tidy_document(output)
-        with open("/code/DATA/converted/" + str(newfile.id) + "/index.html", 'w') as f:
-            f.write(output)
+        try:
+            output = pypandoc.convert_file("/code/DATA/input/" + str(newfile.id) + "/doc",
+                        to='html5',
+                        extra_args=['--extract-media=/code/DATA/converted/' + str(newfile.id)],
+                        format='docx')
         
+            if not os.path.exists('/code/DATA/converted/' + str(newfile.id) ):
+                os.makedirs('/code/DATA/converted/' + str(newfile.id))
+
+            output, errors = tidy_document(output)
+            with open("/code/DATA/converted/" + str(newfile.id) + "/index.html", 'w') as f:
+                f.write(output)
+        except:
+            logger.error("Conversion failed")
 
         f = open("/code/DATA/converted/" + str(newfile.id) + "/index.html")
-        convertedfile = File(f)
-     
+        convertedfile = File(f)     
         newfile.convertedfile = convertedfile
-
         newfile.save()
 
         return Response(status=204)

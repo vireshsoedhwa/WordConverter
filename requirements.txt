@@ -6,3 +6,4 @@ django-cors-headers==3.4.0
 daphne==2.5.0
 pypandoc==1.5
 pytidylib==0.3.2
+zipfile38==0.0.2

@@ -31,6 +31,8 @@ from django.shortcuts import render
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 
+import zipfile
+
 # Create your views here.
 
 class ConversionListCreate(generics.ListCreateAPIView):
@@ -57,7 +59,27 @@ def ConversionImage(request, id, targetfile):
     # logger.error(id)
     # logger.error(targetfile)
     response = FileResponse(open("/code/DATA/converted/" + str(id) + "/media/" + targetfile, 'rb'))
+
     return response
+
+def DownloadHTMLFile(request, id):
+
+    ZIPFILE_PATH = '/code/DATA/temp/' + str(id) + '/zipfile.zip'
+    HTMLFILE_PATH = "/code/DATA/converted/" + str(id) + "/index.html"
+
+    # if not os.path.exists('/code/DATA/temp'):
+    #     os.makedirs('/code/DATA/temp')
+
+    # if not os.path.exists('/code/DATA/temp/' + str(id)):
+    #     os.makedirs('/code/DATA/temp/' + str(id))
+
+    # if not os.path.exists(ZIPFILE_PATH):
+    #     zf = zipfile.ZipFile(ZIPFILE_PATH, 'w')
+    #     zf.write(HTMLFILE_PATH, "index.html")
+
+    response = FileResponse(open(ZIPFILE_PATH, 'rb'))
+    return response
+
 
 class ConversionUploadAndSave(APIView):
     parser_classes = [MultiPartParser]
@@ -68,40 +90,67 @@ class ConversionUploadAndSave(APIView):
 
         # logger.error(request.method)
         # logger.error(request.FILES['file'])
-        logger.error(file_obj.name)
-
+        # logger.error(file_obj.name)
         # logger.error(request.data['filetype'])
         # logger.error(request.data['LastModified'])
 
-        if not os.path.exists('/code/DATA/'):
-            os.makedirs('/code/DATA/')
+        # if not os.path.exists('/code/DATA/'):
+        #     os.makedirs('/code/DATA/')
+        # if not os.path.exists('/code/DATA/converted/'):
+        #     os.makedirs('/code/DATA/converted/')
+        # if not os.path.exists('/code/DATA/temp'):
+        #     os.makedirs('/code/DATA/temp')
 
-        if not os.path.exists('/code/DATA/converted/'):
-            os.makedirs('/code/DATA/converted/')
+        # logger.error(request.data['css'])
 
+        csspath = request.data['css']
+
+        # Create initial record of the file so that ID exists
         newfile = Conversion.objects.create(name=file_obj.name)
-
         newfile.inputfile=file_obj
         newfile.save()
 
         try:
+            # Convert to HTML
             output = pypandoc.convert_file("/code/DATA/input/" + str(newfile.id) + "/doc",
                         to='html5',
                         extra_args=['--extract-media=/code/DATA/converted/' + str(newfile.id)],
                         format='docx')
+
         
             if not os.path.exists('/code/DATA/converted/' + str(newfile.id) ):
                 os.makedirs('/code/DATA/converted/' + str(newfile.id))
 
+            # TIDY the document
             output, errors = tidy_document(output)
+
+            # insert custom css here
+
+            output = output.replace('</head>', '<link rel="stylesheet" href="https://' + csspath + '"></head>')
+
             with open("/code/DATA/converted/" + str(newfile.id) + "/index.html", 'w') as f:
                 f.write(output)
+
+
         except:
             logger.error("Conversion failed")
 
+        # Create conversion object in database
         f = open("/code/DATA/converted/" + str(newfile.id) + "/index.html")
         convertedfile = File(f)     
         newfile.convertedfile = convertedfile
         newfile.save()
+
+        #Create Zip file for downloading
+
+        ZIPFILE_PATH = '/code/DATA/temp/' + str(newfile.id) + '/zipfile.zip'
+        HTMLFILE_PATH = "/code/DATA/converted/" + str(newfile.id) + "/index.html"
+
+        if not os.path.exists('/code/DATA/temp/' + str(newfile.id)):
+            os.makedirs('/code/DATA/temp/' + str(newfile.id))
+
+        if not os.path.exists(ZIPFILE_PATH):
+            zf = zipfile.ZipFile(ZIPFILE_PATH, 'w')
+            zf.write(HTMLFILE_PATH, "index.html")
 
         return Response(status=204)

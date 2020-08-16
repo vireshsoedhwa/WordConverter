@@ -65,7 +65,6 @@ def ConversionImage(request, id, targetfile):
 def DownloadHTMLFile(request, id):
 
     ZIPFILE_PATH = '/code/DATA/temp/' + str(id) + '/zipfile.zip'
-    HTMLFILE_PATH = "/code/DATA/converted/" + str(id) + "/index.html"
 
     # if not os.path.exists('/code/DATA/temp'):
     #     os.makedirs('/code/DATA/temp')
@@ -145,12 +144,22 @@ class ConversionUploadAndSave(APIView):
 
         ZIPFILE_PATH = '/code/DATA/temp/' + str(newfile.id) + '/zipfile.zip'
         HTMLFILE_PATH = "/code/DATA/converted/" + str(newfile.id) + "/index.html"
+        HTML_PATH = "/code/DATA/converted/" + str(newfile.id)
+        MEDIA_PATH = "/code/DATA/converted/" + str(newfile.id) + "/media"
 
         if not os.path.exists('/code/DATA/temp/' + str(newfile.id)):
             os.makedirs('/code/DATA/temp/' + str(newfile.id))
 
         if not os.path.exists(ZIPFILE_PATH):
             zf = zipfile.ZipFile(ZIPFILE_PATH, 'w')
-            zf.write(HTMLFILE_PATH, "index.html")
+
+            if os.path.exists(HTML_PATH):
+                if os.path.exists(HTMLFILE_PATH):
+                    zf.write(HTMLFILE_PATH, "index.html")
+                if os.path.exists(MEDIA_PATH):
+                    for filename in os.listdir(MEDIA_PATH):                        
+                        zf.write(MEDIA_PATH + "/" + filename, filename + ".jpeg")
+                    
+            # zf.write(HTMLFILE_PATH, "index.html")
 
         return Response(status=204)

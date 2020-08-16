@@ -1,8 +1,4 @@
 node_modules
 package-lock.json
 DATA
-__pycache__
 
-migrations
-
-frontend/static/frontend/app.bundle.js

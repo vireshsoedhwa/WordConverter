@@ -23,7 +23,7 @@ RUN apt-get install -y postgresql-client-11
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 
-# EXPOSE 80
+EXPOSE 8000
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

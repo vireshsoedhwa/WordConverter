@@ -47,22 +47,14 @@ export default function UploadFile(props) {
 
     const [CSSvalue, setCSSvalue] = React.useState('nocss');
     const [CssSrc, setCssSrc] = React.useState('');
-
     const [UploadFile, SetUploadFile] = React.useState(null);
-
     const [Filename, SetFilename] = React.useState(null);
-    const [FileType, SetFileType] = React.useState(null);
-    const [LastModified, SetLastModified] = React.useState(null);
-
     const [UploadReady, SetUploadReady] = React.useState(false);
 
     const handleFileChange = (event) => {
 
         SetUploadFile(event.target.files[0]);
         SetFilename(event.target.files[0].name)
-        SetFileType(event.target.files[0].type)
-        SetLastModified(event.target.files[0].lastModifiedDate.toDateString())
-
         SetUploadReady(true);
     };
 
@@ -90,23 +82,10 @@ export default function UploadFile(props) {
             "file",
             UploadFile,
         );
-
-        // if
-
         formData.append(
             "css",
             CssSrc
         );
-
-        // formData.append(
-        //     "filetype",
-        //     FileType
-        // );
-
-        // formData.append(
-        //     "LastModified",
-        //     LastModified
-        // );
 
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
@@ -184,28 +163,20 @@ export default function UploadFile(props) {
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                             >
-                                <Typography className={classes.heading}>File Details and CSS settings:</Typography>
+                                <Typography className={classes.heading}>CSS settings:</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List component="nav" aria-label="main mailbox folders"
-                                // subheader={
-                                //     <ListSubheader component="div" id="nested-list-subheader">
-                                //         File Details:
-                                //     </ListSubheader>
-                                // }
+                                subheader={
+                                    <ListSubheader component="div" id="nested-list-subheader">
+                                        File Name: {Filename}
+                                    </ListSubheader>
+                                }
                                 >
-                                    <ListItem >
+                                    {/* <ListItem >
                                         <ListItemText primary="Filename:" />
                                         <ListItemText secondary={Filename} />
-                                    </ListItem>
-                                    <ListItem >
-                                        <ListItemText primary="FileType:" />
-                                        <ListItemText secondary={FileType} />
-                                    </ListItem>
-                                    <ListItem >
-                                        <ListItemText primary="Last Modified:" />
-                                        <ListItemText secondary={LastModified} />
-                                    </ListItem>
+                                    </ListItem> */}
 
                                     <Divider/>
 

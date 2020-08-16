@@ -112,6 +112,7 @@ export default function UploadFile(props) {
 
         axios.post("http://localhost:8000/api/upload", formData, {
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'X-CSRF-TOKEN': csrftoken
             }
         }).then((response) => {

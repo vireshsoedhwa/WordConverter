@@ -16,6 +16,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import LinkIcon from '@material-ui/icons/Link';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DownloadIcon from '@material-ui/icons/GetApp';
 
 import Link from '@material-ui/core/Link';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -114,6 +115,20 @@ export default function DocumentPreview(props) {
                             rel="noreferrer"
                         >
                             <LinkIcon />
+                        </Link>
+                    </IconButton>
+                </Tooltip>
+
+
+                <Tooltip title="Download">
+                    <IconButton aria-label="share">
+                        <Link
+                            href={"http://localhost:8000/code/DATA/converted/" + props.index + "/html" }
+                            // color="primary"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <DownloadIcon />
                         </Link>
                     </IconButton>
                 </Tooltip>

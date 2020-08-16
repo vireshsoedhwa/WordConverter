@@ -22,6 +22,16 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
+
+
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UploadFile(props) {
+
+    const [CSSvalue, setCSSvalue] = React.useState('nocss');
+    const [CssSrc, setCssSrc] = React.useState('');
 
     const [UploadFile, SetUploadFile] = React.useState(null);
 
@@ -53,15 +66,20 @@ export default function UploadFile(props) {
         SetUploadReady(true);
     };
 
+    const handlecsschange = (event) => {
+        setCSSvalue(event.target.value);
 
+        if (event.target.value === "nocss") {
+            setCssSrc("");
+        }
+        else if (event.target.value === "cpcss") {
+            setCssSrc("ltc.bcit.ca/public/v1/css/bcit.css");
+        }
+    };
 
-    // <h2>File Details:</h2>
-    //                 <p>File Name: {this.state.selectedFile.name}</p>
-    //                 <p>File Type: {this.state.selectedFile.type}</p>
-    //                 <p>
-    //                     Last Modified:{" "}
-    //                     {this.state.selectedFile.lastModifiedDate.toDateString()}
-    //                 </p>
+    const handlecsspath = (event) => {
+        setCssSrc(event.target.value);
+    }
 
 
     const onFileUpload = () => {
@@ -73,10 +91,12 @@ export default function UploadFile(props) {
             UploadFile,
         );
 
-        // formData.append(
-        //     "filename",
-        //     Filename
-        // );
+        // if
+
+        formData.append(
+            "css",
+            CssSrc
+        );
 
         // formData.append(
         //     "filetype",
@@ -116,26 +136,46 @@ export default function UploadFile(props) {
                 alignContent="center"
                 spacing={3}
             >
-                <Grid item >
-                    <form className={classes.root} noValidate autoComplete="off">
-                        <Input label="Outlined" type="file" onChange={handleFileChange} />
 
-                        {UploadReady ?
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                onClick={onFileUpload}
-                            >
-                                Convert to HTML
-                        </Button>
-                            :
-                            <div>&nbsp;</div>
-                        }
 
-                    </form>
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    alignContent="center"
+                    spacing={3}
+                >
+
+
+                    <Grid item >
+                        <form className={classes.root} noValidate autoComplete="off">
+                            <Input label="Outlined" type="file" onChange={handleFileChange} />
+
+                            {UploadReady ?
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    onClick={onFileUpload}
+                                >
+                                    Convert to HTML
+                                </Button>
+                                :
+                                <div>&nbsp;</div>
+                            }
+
+
+                        </form>
+                    </Grid>
+
+
                 </Grid>
 
+
                 {UploadReady ?
+
+
+
                     <Grid item >
                         <Accordion>
                             <AccordionSummary
@@ -143,15 +183,15 @@ export default function UploadFile(props) {
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                             >
-                                <Typography className={classes.heading}>File Details:</Typography>
+                                <Typography className={classes.heading}>File Details and CSS settings:</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List component="nav" aria-label="main mailbox folders"
-                                    // subheader={
-                                    //     <ListSubheader component="div" id="nested-list-subheader">
-                                    //         File Details:
-                                    //     </ListSubheader>
-                                    // }
+                                // subheader={
+                                //     <ListSubheader component="div" id="nested-list-subheader">
+                                //         File Details:
+                                //     </ListSubheader>
+                                // }
                                 >
                                     <ListItem >
                                         <ListItemText primary="Filename:" />
@@ -165,11 +205,33 @@ export default function UploadFile(props) {
                                         <ListItemText primary="Last Modified:" />
                                         <ListItemText secondary={LastModified} />
                                     </ListItem>
+
+                                    <Divider/>
+
+                                    <ListItem >
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">CSS settings</FormLabel>
+                                            <RadioGroup aria-label="gender" name="gender1" value={CSSvalue} onChange={handlecsschange}>
+                                                <FormControlLabel value="nocss" control={<Radio />} label="NoCSS" />
+                                                <FormControlLabel value="cpcss" control={<Radio />} label="courseproduction css" />
+                                                <FormControlLabel value="other" control={<Radio />} label="Other" />
+                                            </RadioGroup>
+
+                                            {CSSvalue == "other" ?
+                                                <TextField id="outlined-basic" label="Custom path to CSS" variant="outlined" onChange={handlecsspath} />
+                                                :
+                                                <div></div>
+                                            }
+                                        </FormControl>
+                                    </ListItem>
                                 </List>
+
+
                             </AccordionDetails>
                         </Accordion>
-                        <Divider />
                     </Grid>
+
+
                     :
                     <Grid item>
                         <Typography variant="subtitle1">
@@ -177,6 +239,11 @@ export default function UploadFile(props) {
                     </Typography>
                     </Grid>
                 }
+
+
+
+
+
             </Grid>
         </div>
     );

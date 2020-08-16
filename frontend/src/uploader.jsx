@@ -130,6 +130,13 @@ export default function UploadFile(props) {
 
                     <Grid item >
                         <form className={classes.root} noValidate autoComplete="off">
+
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                            >
+                                Instructions
+                                </Button>
                             <Input label="Outlined" type="file" onChange={handleFileChange} />
 
                             {UploadReady ?
@@ -167,18 +174,18 @@ export default function UploadFile(props) {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List component="nav" aria-label="main mailbox folders"
-                                subheader={
-                                    <ListSubheader component="div" id="nested-list-subheader">
-                                        File Name: {Filename}
-                                    </ListSubheader>
-                                }
+                                    subheader={
+                                        <ListSubheader component="div" id="nested-list-subheader">
+                                            File Name: {Filename}
+                                        </ListSubheader>
+                                    }
                                 >
                                     {/* <ListItem >
                                         <ListItemText primary="Filename:" />
                                         <ListItemText secondary={Filename} />
                                     </ListItem> */}
 
-                                    <Divider/>
+                                    <Divider />
 
                                     <ListItem >
                                         <FormControl component="fieldset">

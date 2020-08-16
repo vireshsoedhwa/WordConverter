@@ -71,7 +71,18 @@ export default function UploadFile(props) {
 
         formData.append(
             "file",
-            UploadFile
+            UploadFile,
+            Filename
+        );
+
+        formData.append(
+            "filetype",
+            FileType
+        );
+
+        formData.append(
+            "LastModified",
+            LastModified
         );
 
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
@@ -106,64 +117,63 @@ export default function UploadFile(props) {
                     <form className={classes.root} noValidate autoComplete="off">
                         <Input label="Outlined" type="file" onChange={handleFileChange} />
 
-                        {UploadReady ? 
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={onFileUpload}
-                        >
-                            Convert to HTML
+                        {UploadReady ?
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                onClick={onFileUpload}
+                            >
+                                Convert to HTML
                         </Button>
-                        :
-                        <div>&nbsp;</div>
+                            :
+                            <div>&nbsp;</div>
                         }
-                        
+
                     </form>
                 </Grid>
 
-                {UploadReady ?     
-                <Grid item >
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography className={classes.heading}>File Details:</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <List component="nav" aria-label="main mailbox folders"
-                                subheader={
-                                    <ListSubheader component="div" id="nested-list-subheader">
-                                        File Details:
-                            </ListSubheader>
-                                }
+                {UploadReady ?
+                    <Grid item >
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel2a-content"
+                                id="panel2a-header"
                             >
-                                <ListItem >
-                                    <ListItemText primary="Filename:" />
-                                    <ListItemText secondary={Filename} />
-                                </ListItem>
-                                <ListItem >
-                                    <ListItemText primary="FileType:" />
-                                    <ListItemText secondary={FileType} />
-                                </ListItem>
-                                <ListItem >
-                                    <ListItemText primary="Last Modified:" />
-                                    <ListItemText secondary={LastModified} />
-                                </ListItem>
-                            </List>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Divider />
-                </Grid>
-                :
-                <Grid item>
-                    <Typography variant="subtitle1">
-                        Please Select a Word document. Only word files supported ok tnx
+                                <Typography className={classes.heading}>File Details:</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <List component="nav" aria-label="main mailbox folders"
+                                    // subheader={
+                                    //     <ListSubheader component="div" id="nested-list-subheader">
+                                    //         File Details:
+                                    //     </ListSubheader>
+                                    // }
+                                >
+                                    <ListItem >
+                                        <ListItemText primary="Filename:" />
+                                        <ListItemText secondary={Filename} />
+                                    </ListItem>
+                                    <ListItem >
+                                        <ListItemText primary="FileType:" />
+                                        <ListItemText secondary={FileType} />
+                                    </ListItem>
+                                    <ListItem >
+                                        <ListItemText primary="Last Modified:" />
+                                        <ListItemText secondary={LastModified} />
+                                    </ListItem>
+                                </List>
+                            </AccordionDetails>
+                        </Accordion>
+                        <Divider />
+                    </Grid>
+                    :
+                    <Grid item>
+                        <Typography variant="subtitle1">
+                            Please Select a Word document. Only word files supported ok tnx
                     </Typography>
-                </Grid>
+                    </Grid>
                 }
-
             </Grid>
         </div>
     );

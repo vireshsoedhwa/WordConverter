@@ -34,7 +34,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 class ConversionListCreate(generics.ListCreateAPIView):
-    queryset = Conversion.objects.all().order_by('-id')[:4]
+    queryset = Conversion.objects.all().order_by('-id')[:8]
     serializer_class = ConversionSerializer
 
 
@@ -68,20 +68,20 @@ class ConversionUploadAndSave(APIView):
 
         # logger.error(request.method)
         # logger.error(request.FILES['file'])
-        # logger.error(file_obj)
+        # logger.error(file_obj.name)
 
-
+        # logger.error(request.data['filetype'])
+        # logger.error(request.data['LastModified'])
 
         if not os.path.exists('/code/DATA/'):
             os.makedirs('/code/DATA/')
 
-        newfile = Conversion.objects.create(name="doc")
+        newfile = Conversion.objects.create(name=file_obj.name)
 
         newfile.inputfile=file_obj
         newfile.save()
 
-
-        output = pypandoc.convert_file("/code/DATA/input/" + str(newfile.id) + "/" + newfile.name ,
+        output = pypandoc.convert_file("/code/DATA/input/" + str(newfile.id) + "/doc",
                                to='html5',
                                extra_args=['--extract-media=/code/DATA/converted/' + str(newfile.id)],
                                format='docx')

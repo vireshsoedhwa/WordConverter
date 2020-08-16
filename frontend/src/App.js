@@ -53,7 +53,7 @@ export default class App extends Component {
                 <React.Fragment key={item.id}>
                     {/* {item.id} - {item.name} - input: {item.inputfile} - converted: {item.convertedfile} */}
                     <Grid item >
-                        <DocumentPreview index={item.id} time={item.created_at}/>
+                        <DocumentPreview index={item.id} time={item.created_at} name={item.name}/>
                     </Grid>
                 </React.Fragment>
             )

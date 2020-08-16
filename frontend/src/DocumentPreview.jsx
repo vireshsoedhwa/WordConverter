@@ -59,7 +59,7 @@ export default function DocumentPreview(props) {
         thedate.getDate() + "  " + thedate.getHours() + ":" + thedate.getMinutes()
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} raised>
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
@@ -71,7 +71,7 @@ export default function DocumentPreview(props) {
                 //     <MoreVertIcon />
                 //   </IconButton>
                 // }
-                title=""
+                title={props.name}
                 subheader={datestring}
             />
             {/* <CardMedia
@@ -89,7 +89,7 @@ export default function DocumentPreview(props) {
                         Preview
                     </Typography> */}
                     <MDBContainer>
-                        <MDBIframe src={"http://localhost:8000/api/media?doc=" + props.index}/>
+                        <MDBIframe src={"http://localhost:8000/api/media?doc=" + props.index} />
                     </MDBContainer>
 
                 </Typography>
@@ -132,11 +132,10 @@ export default function DocumentPreview(props) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>Method:</Typography>
+                    <Typography paragraph>Original Document Name:</Typography>
                     <Typography paragraph>
-                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                        minutes.
-          </Typography>
+                        {props.name}
+                    </Typography>
                 </CardContent>
             </Collapse>
         </Card>

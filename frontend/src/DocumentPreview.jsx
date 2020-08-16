@@ -17,6 +17,8 @@ import LinkIcon from '@material-ui/icons/Link';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DownloadIcon from '@material-ui/icons/GetApp';
+import ViewIcon from '@material-ui/icons/Visibility';
+import Button from '@material-ui/core/Button';
 
 import Link from '@material-ui/core/Link';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -106,7 +108,7 @@ export default function DocumentPreview(props) {
                     <ShareIcon />
                 </IconButton> */}
 
-                <Tooltip title="Open in New Tab">
+                {/* <Tooltip title="Open in New Tab">
                     <IconButton aria-label="share">
                         <Link
                             href={"/api/media?doc=" + props.index}
@@ -117,13 +119,29 @@ export default function DocumentPreview(props) {
                             <LinkIcon />
                         </Link>
                     </IconButton>
-                </Tooltip>
+                </Tooltip> */}
+
+
+
+                <Link
+                    href={"/api/media?doc=" + props.index}
+                    // color="primary"
+                    target="_blank"
+                    rel="noreferrer"
+                >                    
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                    >
+                        Open in new Tab
+                    </Button>
+                </Link>
 
 
                 <Tooltip title="Download">
                     <IconButton aria-label="share">
                         <Link
-                            href={"/code/DATA/converted/" + props.index + "/html" }
+                            href={"/code/DATA/converted/" + props.index + "/html"}
                             // color="primary"
                             target="_blank"
                             rel="noreferrer"

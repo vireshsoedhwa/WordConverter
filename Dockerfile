@@ -10,20 +10,18 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y pandoc
 RUN apt-get install -y libtidy-dev
 
-RUN apt-get update && apt-get upgrade -y
-# RUN apt-get install -y nginx
 
+RUN apt-get install -y postgresql-client-11
 
 # NGINX
+# RUN apt-get install -y nginx
 # COPY ./deploy/nginx/sites-available/ /etc/nginx/sites-available/
 # RUN rm -Rf /etc/nginx/sites-enabled/default
 # RUN ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/app
 
-
 # Install NodeJS 14 and NPM
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
-
 
 # EXPOSE 80
 

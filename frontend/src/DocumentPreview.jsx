@@ -90,7 +90,7 @@ export default function DocumentPreview(props) {
                         Preview
                     </Typography> */}
                     <MDBContainer>
-                        <MDBIframe src={"http://localhost:8000/api/media?doc=" + props.index} />
+                        <MDBIframe src={"/api/media?doc=" + props.index} />
                     </MDBContainer>
 
                 </Typography>
@@ -109,7 +109,7 @@ export default function DocumentPreview(props) {
                 <Tooltip title="Open in New Tab">
                     <IconButton aria-label="share">
                         <Link
-                            href={"http://localhost:8000/api/media?doc=" + props.index}
+                            href={"/api/media?doc=" + props.index}
                             // color="primary"
                             target="_blank"
                             rel="noreferrer"
@@ -123,7 +123,7 @@ export default function DocumentPreview(props) {
                 <Tooltip title="Download">
                     <IconButton aria-label="share">
                         <Link
-                            href={"http://localhost:8000/code/DATA/converted/" + props.index + "/html" }
+                            href={"/code/DATA/converted/" + props.index + "/html" }
                             // color="primary"
                             target="_blank"
                             rel="noreferrer"

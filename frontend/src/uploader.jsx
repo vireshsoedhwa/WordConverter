@@ -110,7 +110,7 @@ export default function UploadFile(props) {
 
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
-        axios.post("http://localhost:8000/api/upload", formData, {
+        axios.post("/api/upload", formData, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'X-CSRF-TOKEN': csrftoken

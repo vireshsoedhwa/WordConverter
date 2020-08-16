@@ -28,7 +28,7 @@ export default class App extends Component {
     }
 
     GetLatestData(){
-        fetch("http://localhost:8000/api/conversion")
+        fetch("/api/conversion")
         .then(response => {
             if (response.status > 400) {
 

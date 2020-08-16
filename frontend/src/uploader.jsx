@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 export default function UploadFile(props) {
 
     const [UploadFile, SetUploadFile] = React.useState(null);
-    // const [UploadFile, SetUploadFile] = React.useState(null);
 
     const [Filename, SetFilename] = React.useState(null);
     const [FileType, SetFileType] = React.useState(null);
@@ -72,18 +71,22 @@ export default function UploadFile(props) {
         formData.append(
             "file",
             UploadFile,
-            Filename
         );
 
-        formData.append(
-            "filetype",
-            FileType
-        );
+        // formData.append(
+        //     "filename",
+        //     Filename
+        // );
 
-        formData.append(
-            "LastModified",
-            LastModified
-        );
+        // formData.append(
+        //     "filetype",
+        //     FileType
+        // );
+
+        // formData.append(
+        //     "LastModified",
+        //     LastModified
+        // );
 
         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 

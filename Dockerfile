@@ -10,7 +10,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y pandoc
 RUN apt-get install -y libtidy-dev
 
-# RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get upgrade -y
 # RUN apt-get install -y nginx
 
 
@@ -21,12 +21,12 @@ RUN apt-get install -y libtidy-dev
 
 
 # Install NodeJS 14 and NPM
-# RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-# RUN apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
 
 
 # EXPOSE 80
 
-# COPY ./docker-entrypoint.sh /
-# RUN chmod +x /docker-entrypoint.sh
-# ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]

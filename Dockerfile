@@ -4,7 +4,13 @@ RUN mkdir /code
 WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
-COPY . /code/
+# COPY . /code/
+
+COPY conversions /code/conversions
+COPY frontend /code/frontend
+COPY WordConverter /code/WordConverter
+COPY manage.py /code/manage.py
+
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y pandoc

@@ -93,12 +93,12 @@ class ConversionUploadAndSave(APIView):
         # logger.error(request.data['filetype'])
         # logger.error(request.data['LastModified'])
 
-        # if not os.path.exists('/code/DATA/'):
-        #     os.makedirs('/code/DATA/')
-        # if not os.path.exists('/code/DATA/converted/'):
-        #     os.makedirs('/code/DATA/converted/')
-        # if not os.path.exists('/code/DATA/temp'):
-        #     os.makedirs('/code/DATA/temp')
+        if not os.path.exists('/code/DATA/'):
+            os.makedirs('/code/DATA/')
+        if not os.path.exists('/code/DATA/converted/'):
+            os.makedirs('/code/DATA/converted/')
+        if not os.path.exists('/code/DATA/temp'):
+            os.makedirs('/code/DATA/temp')
 
         # logger.error(request.data['css'])
 

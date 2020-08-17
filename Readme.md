@@ -27,9 +27,11 @@ http://localhost:8000
 - implement function to make image paths relative to bypass pandocs asset extraction
 - ability to upload documents in batch instead of one by one
 - provide "alt" text for images manually by user input
+- Currently only the last 8 uploads are retained. future update can include a better management of the documents and thus be able to support more for viewing. 
 
 ### Assumptions
 
 - Users will only upload word files that contain no malicious code
 - Only one user will be using the site simultaneously
 - word documents contain non-sensitive data and are visible to any visitors to the site
+- User will only use this site as a conversion tool and not file storage. 

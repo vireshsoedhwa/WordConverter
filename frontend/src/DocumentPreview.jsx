@@ -56,6 +56,10 @@ export default function DocumentPreview(props) {
         setExpanded(!expanded);
     };
 
+    const showpreview = () => {
+        props.showpreview(props.index)
+    }
+
     let thedate = new Date(props.time);
 
     let datestring = thedate.getFullYear() + "-" + thedate.getMonth() + "-" +
@@ -92,7 +96,8 @@ export default function DocumentPreview(props) {
                         Preview
                     </Typography> */}
                     <MDBContainer>
-                        <MDBIframe src={"/api/media?doc=" + props.index} />
+                        <MDBIframe
+                            src={"/api/media?doc=" + props.index} />
                     </MDBContainer>
 
                 </Typography>
@@ -121,21 +126,13 @@ export default function DocumentPreview(props) {
                     </IconButton>
                 </Tooltip> */}
 
-
-
-                <Link
-                    href={"/api/media?doc=" + props.index}
-                    // color="primary"
-                    target="_blank"
-                    rel="noreferrer"
-                >                    
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                    >
-                        Open in new Tab
-                    </Button>
-                </Link>
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={showpreview}
+                >
+                    Show Preview
+                </Button>
 
 
                 <Tooltip title="Download">
@@ -152,7 +149,7 @@ export default function DocumentPreview(props) {
                 </Tooltip>
 
 
-                <IconButton
+                {/* <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded,
                     })}
@@ -161,16 +158,19 @@ export default function DocumentPreview(props) {
                     aria-label="show more"
                 >
                     <ExpandMoreIcon />
-                </IconButton>
+                </IconButton> */}
+
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+
+            {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>Original Document Name:</Typography>
                     <Typography paragraph>
                         {props.name}
                     </Typography>
                 </CardContent>
-            </Collapse>
+            </Collapse> */}
+
         </Card>
     );
 }

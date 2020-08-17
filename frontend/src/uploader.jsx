@@ -51,6 +51,10 @@ export default function UploadFile(props) {
     const [Filename, SetFilename] = React.useState(null);
     const [UploadReady, SetUploadReady] = React.useState(false);
 
+    const showinstructions = () =>{
+        props.showinstructions()
+    }
+
     const handleFileChange = (event) => {
 
         SetUploadFile(event.target.files[0]);
@@ -134,10 +138,14 @@ export default function UploadFile(props) {
                             <Button
                                 variant="outlined"
                                 color="primary"
+                                onClick={showinstructions}
                             >
                                 Instructions
-                                </Button>
+                            </Button>
+
                             <Input label="Outlined" type="file" onChange={handleFileChange} />
+
+
 
                             {UploadReady ?
                                 <Button

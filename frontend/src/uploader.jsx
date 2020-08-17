@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -51,7 +52,7 @@ export default function UploadFile(props) {
     const [Filename, SetFilename] = React.useState(null);
     const [UploadReady, SetUploadReady] = React.useState(false);
 
-    const showinstructions = () =>{
+    const showinstructions = () => {
         props.showinstructions()
     }
 
@@ -121,7 +122,6 @@ export default function UploadFile(props) {
                 spacing={3}
             >
 
-
                 <Grid
                     container
                     direction="row"
@@ -131,10 +131,8 @@ export default function UploadFile(props) {
                     spacing={3}
                 >
 
-
                     <Grid item >
                         <form className={classes.root} noValidate autoComplete="off">
-
                             <Button
                                 variant="outlined"
                                 color="primary"
@@ -142,10 +140,25 @@ export default function UploadFile(props) {
                             >
                                 Instructions
                             </Button>
+                            {/* <Input label="Outlined" type="file" accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={handleFileChange} /> */}
 
-                            <Input label="Outlined" type="file" onChange={handleFileChange} />
+                            <input
+                                accept="application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                className={classes.input}
+                                style={{ display: 'none' }}
+                                id="raised-button-file"
+                                multiple
+                                type="file"
+                                onChange={handleFileChange}
+                            />
+                            <label htmlFor="raised-button-file">
+                                <Button variant="outlined" component="span" className={classes.button}
+                                >
+                                    Select File
+                                </Button>
+                            </label>
 
-
+                            
 
                             {UploadReady ?
                                 <Button
@@ -158,7 +171,6 @@ export default function UploadFile(props) {
                                 :
                                 <div>&nbsp;</div>
                             }
-
                         </form>
                     </Grid>
 

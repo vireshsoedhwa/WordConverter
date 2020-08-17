@@ -11,9 +11,9 @@ echo "--------------------------------------------------------------------------
 
 echo "-------------------------------------------------------------------------------------------\n"
 >&2 echo "Create relevant directories"
-mkdir -p "/code/DATA/converted/"
-mkdir -p "/code/DATA/input/"
-mkdir -p "/code/DATA/temp/"
+# mkdir -p "/code/DATA/converted/"
+# mkdir -p "/code/DATA/input/"
+# mkdir -p "/code/DATA/temp/"
 >&2 echo "Relevant directories created"
 echo "-------------------------------------------------------------------------------------------\n"
 

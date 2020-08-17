@@ -183,7 +183,7 @@ export default class App extends Component {
                         </Typography>
                         <Typography variant="body1" gutterBottom>
                             In order to have a succesful conversion please consider uploading Word(.docx) files only. 
-                            Select the file and choose your prefered CSS settings below. After conversion is done your file should be ready for preview.
+                            Select the file and choose your preferred CSS settings below. After conversion is done your file should be ready for preview.
                         </Typography>
 
                         <Typography variant="h5" gutterBottom>

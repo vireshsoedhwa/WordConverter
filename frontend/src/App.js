@@ -110,7 +110,9 @@ export default class App extends Component {
                     {/* {item.id} - {item.name} - input: {item.inputfile} - converted: {item.convertedfile} */}
                     <Grid item >
                         <DocumentPreview index={item.id} time={item.created_at} name={item.name}
-                            showpreview={this.showpreview} />
+                            showpreview={this.showpreview} 
+                            GetLatestData={this.GetLatestData}
+                            />
                     </Grid>
                 </React.Fragment>
             )

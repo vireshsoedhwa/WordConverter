@@ -23,7 +23,12 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { MDBContainer, MDBIframe } from "mdbreact";
+
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,9 +57,34 @@ export default function DocumentPreview(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const openmenu = (event) => {
+        setAnchorEl(event.currentTarget);
     };
+
+    const closemenu = () => {
+        setAnchorEl(null);
+    };
+
+    const deleteDocument = () => {
+        closemenu();
+
+        axios({
+            method: 'delete',
+            url: '/api/delete',
+            params: {
+                source: props.index
+            }
+        })
+            .then(function (response) {
+                props.GetLatestData()
+            });
+    }
+
+    // const handleExpandClick = () => {
+    //     setExpanded(!expanded);
+    // };
 
     const showpreview = () => {
         props.showpreview(props.index)
@@ -73,19 +103,27 @@ export default function DocumentPreview(props) {
                         {props.index}
                     </Avatar>
                 }
-                // action={
-                //   <IconButton aria-label="settings">
-                //     <MoreVertIcon />
-                //   </IconButton>
-                // }
+                action={
+                    <IconButton aria-label="settings"
+                        onClick={openmenu}
+                    >
+                        <MoreVertIcon />
+                    </IconButton>
+                }
                 title={props.name}
                 subheader={datestring}
             />
-            {/* <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      /> */}
+
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={closemenu}            >
+                <MenuItem onClick={deleteDocument}>Delete</MenuItem>
+            </Menu>
+
+
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {/* This impressive paella is a perfect party dish and a fun meal to cook together with your

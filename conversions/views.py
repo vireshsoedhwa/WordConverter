@@ -163,3 +163,16 @@ class ConversionUploadAndSave(APIView):
             # zf.write(HTMLFILE_PATH, "index.html")
 
         return Response(status=204)
+
+
+
+class DeleteHtml(generics.DestroyAPIView):
+    queryset = Conversion.objects.all()
+    serializer_class = ConversionSerializer
+    
+    def delete(self, request, format=None):
+        deleteid = request.query_params['source']
+        selected = Conversion.objects.get(id=deleteid)
+        logger.error("deleting " + deleteid)    
+        selected.delete()
+        return Response(status=204)

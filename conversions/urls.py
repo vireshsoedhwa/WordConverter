@@ -8,5 +8,7 @@ urlpatterns = [
     url(r'upload', views.ConversionUploadAndSave.as_view()),
     path('media', views.ConversionHTMLfile.as_view() ),
     path('<int:id>/media/<targetfile>', views.ConversionImage),
-    path('<int:id>/html', views.DownloadHTMLFile)
+    path('<int:id>/html', views.DownloadHTMLFile),
+    # path('delete', views.DeleteHtml.as_view())
+    url(r'^delete/$', views.DeleteHtml.as_view())
 ]
